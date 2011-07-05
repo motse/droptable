@@ -1,0 +1,43 @@
+droptable is a tiny and fast netfilter module for drop alot of socket packet.
+
+Build
+1 install kernel-devel
+2 make
+
+Install
+edit /boot/grub/menu.lst
+add kernel boot option vmalloc size, like this 'kernel /vmlinuz26 vmalloc=576M'.
+
+1 reboot system
+
+2 edit /etc/dtable add some ip address end with '\n'.
+192.168.0.1
+192.168.0.2
+192.168.0.3
+
+3 insmod dtable.ko
+
+Uninstall
+1 rmmod dtable.ko
+
+Manager
+1 insert one ipaddr to drop table
+echo <ip address> > /proc/dtable/push
+like 'echo 192.168.0.101 > /proc/dtable/push'
+
+2 remove one ipaddr from drop table
+echo <ip address> > /proc/dtable/remove
+like 'echo 192.168.0.101 > /proc/dtable/remove'
+
+3 dump drop ip table to a text file
+echo <file path> > /proc/dtable/save
+like '/root/ips.txt > /proc/dtable/save'
+
+4 load drop ip table from a text file
+echo <file path> > /proc/dtable/load
+like '/root/ips.txt > /proc/dtable/load'
+
+4 turn on/off drop table
+echo <0|1> > /proc/dtable/switch
+echo 1 > /proc/dtable/switch turn on drop table
+echo 0 > /proc/dtable/switch turn of drop table
